@@ -4,7 +4,7 @@
  extensions, and calculates percentages for specific categories.
 """
 
-import csv
+import csv, urllib2, re
 
 
 def downloadData(url):
@@ -45,28 +45,59 @@ def processData(response_data):
         try:
             # Add formatted and indexed values from 'rec' into the dictionary.
             #myresult_dict[rec[0]] = (rec[1], datetime.datetime.strptime(rec[2], "%d/%m/%Y"))
-            myresult_dict[rec[0]] = (rec[1], (rec[2], "%d/%m/%Y"))
+            myresult_dict[rec[0]] = (rec[1], (rec[2], rec[3], rec[4]))
         except (ValueError):
             # Write formatted error message to log file.
-            print 'Error processing line {} for *** {}'.format(rec_line[0], rec[0])
+            # print 'Error processing line {} for *** {}'.format(rec_line[0], rec[0])
             pass
         else:
             pass
 
     return myresult_dict
+    print myresult_dict
 
+def imgSearch(response_data):
+    """
+    Args:
+        response_data (str): Contents of data from downloadData function.
+    Returns:
+        myresult_dict (dict): Dictionary file containing formatted records.
+    Example:
+        >> processData(csvdata)
+        >>
+    """
+    # Creates dict 'myresult_dict'.
 
+def uaSearch(response_data):
+    """
+    Args:
+        response_data (str): Contents of data from downloadData function.
+    Returns:
+        myresult_dict (dict): Dictionary file containing formatted records.
+    Example:
+        >> processData(csvdata)
+        >>
+    """
+    # Creates dict 'myresult_dict'.
+
+def main():
+    url = 'http://s3.amazonaws.com/cuny-is211-spring2015/weblog.csv'
+    csvdata = downloadData(url)
+    result = processData(csvdata)
+"""
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('url', help='Enter the data url')
     args = parser.parse_args()
     if args.url:
+        # http://s3.amazonaws.com/cuny-is211-spring2015/weblog.csv
         url = ''
         csvdata = downloadData(url)
         result = processData(csvdata)
         records = displayPerson(id, result)
     else:
         print 'error'
+"""
 
 if __name__ == '__main__':
     main()
