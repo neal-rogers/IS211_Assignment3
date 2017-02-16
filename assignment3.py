@@ -34,51 +34,25 @@ def processData(response_data):
         >> processData(csvdata)
         >>
     """
-    # Creates dict 'myresult_dict'.
-    myresult_dict = {}
-    # Splits the string on each '\n' delimiter and stores each in 'response_list'.
-    response_list = response_data.split("\n")
+    # Creates dict, 'browsers', with default values.
+    browsers = {'Firefox':0,
+                'Chrome':0,
+                'Internet Explorer':0,
+                'Safari':0}
+    # Creates dict, 'imghits', with default values.
+    imghits = {'img':0,
+               'rowcount':0}
+
+    # Creates csv reader object, 'reader'.
+    reader = csv.reader(response_data.split("\n"))
     # For each line in 'response_list' within specified range...
-    for rec_line in response_list[1:-1]:
-        # Split each line on ',' delimiter
-        rec = rec_line.split(",")
-        try:
-            # Add formatted and indexed values from 'rec' into the dictionary.
-            #myresult_dict[rec[0]] = (rec[1], datetime.datetime.strptime(rec[2], "%d/%m/%Y"))
-            myresult_dict[rec[0]] = (rec[1], (rec[2], rec[3], rec[4]))
-        except (ValueError):
-            # Write formatted error message to log file.
-            # print 'Error processing line {} for *** {}'.format(rec_line[0], rec[0])
-            pass
-        else:
-            pass
+    for row in reader:
+        # Count total number of page hits while in loop.
+        rowcount += 1
+
 
     return myresult_dict
     print myresult_dict
-
-def imgSearch(response_data):
-    """
-    Args:
-        response_data (str): Contents of data from downloadData function.
-    Returns:
-        myresult_dict (dict): Dictionary file containing formatted records.
-    Example:
-        >> processData(csvdata)
-        >>
-    """
-    # Creates dict 'myresult_dict'.
-
-def uaSearch(response_data):
-    """
-    Args:
-        response_data (str): Contents of data from downloadData function.
-    Returns:
-        myresult_dict (dict): Dictionary file containing formatted records.
-    Example:
-        >> processData(csvdata)
-        >>
-    """
-    # Creates dict 'myresult_dict'.
 
 def main():
     url = 'http://s3.amazonaws.com/cuny-is211-spring2015/weblog.csv'
