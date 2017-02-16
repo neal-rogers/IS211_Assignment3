@@ -64,7 +64,9 @@ if __name__ == '__main__':
 
             return myresult_dict
             print myresult_dict
-
+            # Determine the percentage imghits and print result.
+            imgcalc = (float(imghits['img'])) / (float(imghits['rowcount']))*100
+            print "Image requests account for {}% of all requests.".format(imgcalc)
             # Determine most popular browser and print result.
             maximum = max(browsers, key=browsers.get)
             print "The most popular browser is {}.".format(maximum)
