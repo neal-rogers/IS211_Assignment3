@@ -51,12 +51,12 @@ def processData(response_data):
         imghits['rowcount'] += 1
         if re.search(r"(?i)(jpg|jpeg)|gif|png", row[0]):
             imghits['img'] += 1
-        if re.search(r"Firefox", row[2]):
-            browsers['Firefox'] += 1
+        if re.search("firefox", row[2]):
+           browsers['Firefox'] += 1
         elif re.search(r"Chrome", row[2]):
-            browsers['Chrome'] += 1
+           browsers['Chrome'] += 1
         elif re.search(r"MSIE", row[2]):
-            browsers['Internet Explorer'] += 1
+           browsers['Internet Explorer'] += 1
         elif re.search(r'Safari', row[2]):
             browsers['Safari'] += 1
 
@@ -81,7 +81,6 @@ def main():
         url = ''
         csvdata = downloadData(url)
         result = processData(csvdata)
-        records = displayPerson(id, result)
     else:
         print 'error'
 """
