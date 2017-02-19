@@ -23,6 +23,7 @@ def downloadData(url):
     data = response.read()
     return data
 
+
 def processData(response_data):
     """
     Args:
@@ -43,47 +44,44 @@ def processData(response_data):
                'rowcount':0}
 
     # Creates csv reader object, 'reader'.
-    #reader = csv.reader(response_data.split("\n"))
-    # For each line in 'response_list' within specified range...
+    # For each line in 'response_data' within specified range...
     for row in csv.reader(response_data):
-    #for row in reader:
         # Count total number of page hits while in loop.
         imghits['rowcount'] += 1
-        if re.search(r"(?i)(jpg|jpeg)|gif|png", row[0]):
+        if re.search(r"jpe?g|JPE?G|GIF|PNG|gif|png", row[0]):
             imghits['img'] += 1
-        if re.search("firefox", row[2]):
-           browsers['Firefox'] += 1
+        if re.search(r"MSIE", row[2]):
+           browsers['Internet Explorer'] += 1
         elif re.search(r"Chrome", row[2]):
            browsers['Chrome'] += 1
-        elif re.search(r"MSIE", row[2]):
-           browsers['Internet Explorer'] += 1
-        elif re.search(r'Safari', row[2]):
+        elif re.search(r"firefox", row[2]):
+           browsers['Firefox'] += 1
+        elif re.search(r"Safari", row[2]) and not re.search("Chrome", row[2]):
             browsers['Safari'] += 1
 
     # Determine the percentage imghits and print result.
     imgcalc = (float(imghits['img'])) / (float(imghits['rowcount'])) * 100
     print "Image requests account for {}% of all requests.".format(imgcalc)
+
     # Determine most popular browser and print result.
     maximum = max(browsers, key=browsers.get)
     print "The most popular browser is {}.".format(maximum)
 
 def main():
     url = 'http://s3.amazonaws.com/cuny-is211-spring2015/weblog.csv'
-    csvdata = downloadData(url)
-    processData(csvdata)
-"""
-def main():
-    parser = argparse.ArgumentParser()
+    filedata = downloadData(url)
+    processData(filedata)
+
+    """parser = argparse.ArgumentParser()
     parser.add_argument('url', help='Enter the data url')
     args = parser.parse_args()
     if args.url:
-        # http://s3.amazonaws.com/cuny-is211-spring2015/weblog.csv
-        url = ''
+        url = 'https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv'
         csvdata = downloadData(url)
         result = processData(csvdata)
     else:
         print 'error'
-"""
+    """
 
 if __name__ == '__main__':
     main()
